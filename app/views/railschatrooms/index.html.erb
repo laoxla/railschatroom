@@ -1,0 +1,11 @@
+<h1>Railschatrooms#index</h1>
+<p>Find me in app/views/railschatrooms/index.html.erb</p>
+
+ <h3> Channels </h3>
+<% @railschatrooms.each do |railschatroom| %>
+
+<ul>
+  <li><%= railschatroom.name %></li>
+</ul>
+
+<%end%>

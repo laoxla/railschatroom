@@ -1,0 +1,12 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  railschatroom_id: 1
+  posted_at: 2015-10-09
+
+two:
+  user_id: 1
+  railschatroom_id: 1
+  posted_at: 2015-10-09

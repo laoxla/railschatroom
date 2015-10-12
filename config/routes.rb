@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+
+  namespace :api do
+    get 'chats' => 'chats#index'
+  end
+
+
   root 'railschatrooms#index'
 
   get 'railschatrooms/show'
@@ -16,6 +22,11 @@ Rails.application.routes.draw do
   get "/users/new" => 'users#new', as: :sign_up
 
  post "/users" => 'users#create', as: :users
+
+ # namespace :api do
+ #    get "railschatrooms" => 'railschatrooms#index'
+ #  end
+
 
 
 

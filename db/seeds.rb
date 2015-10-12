@@ -11,7 +11,7 @@ users = User.all
 
    text = Faker::Lorem.sentence(3)
    posted_at = Faker::Time.between(2.days.ago, Time.now, :all)
-    railschatroom_id = rand(1..3)
+   railschatroom_id = rand(1..3)
    users.each {|user| user.chats.create!(text: text, posted_at: posted_at, railschatroom_id: railschatroom_id)}
 
  end

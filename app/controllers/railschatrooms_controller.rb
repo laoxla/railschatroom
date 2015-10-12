@@ -2,7 +2,8 @@ class RailschatroomsController < ApplicationController
 
 
   def index
-    @railschatrooms = Railschatroom.all
+    @users = User.all
+    @railsrooms = Railschatroom.all
   end
 
   def show

@@ -13,7 +13,7 @@ var Railschatroom = React.createClass({
 
   componentDidMount(){
       var component = this;
-      fetch("/api/chats").then(function(response){
+      fetch("/api/chats", {credentials: 'include'}).then(function(response){
         response.json().then(function(json_data){
           // console.log(json_data)
 
@@ -54,7 +54,14 @@ var Railschatroom = React.createClass({
 
     //### Handle Click - Changing Rooms ### //
     var chatroom_buttons = this.state.railsChatRooms.map(function(railsChatRoom){
-      return <button onClick= {component._changeRoom} data-room={railsChatRoom.id}>{railsChatRoom.name}</button>
+      return(
+        <div>
+        <br></br>
+        <div className="rooms">
+      <li onClick={component._changeRoom} data-room={railsChatRoom.id}>{railsChatRoom.name}</li>
+      </div>
+      </div>
+    )
     })
 
     var filteredMessagesByRoom = this.state.currentMessages.filter(function(message){
@@ -63,22 +70,37 @@ var Railschatroom = React.createClass({
     })
 
      var messageTags = filteredMessagesByRoom.map(function(message){
-       return <p>{message.text}</p>
+       return(
+         <div>
+         <hr></hr>
+
+         <div className="chats">
+         <h4>{message.text}</h4>
+         <cite>{message.user.handle} - {message.posted_at}</cite>
+        </div>
+        </div>
+       )
+
      })
 
       return (
 
         <div>
-          <h3>Channels</h3>
-             {chatroom_buttons}
-
-
-          <h2>{this.state.currentRoom.name}</h2>
-
-          <h4>Messages</h4>
-          {messageTags}
-
-        </div>
+          <div className="container">
+            <div className="channel">
+              <h2>Channels</h2>
+                 <strong>{chatroom_buttons}</strong>
+            </div>
+              <div className="chatbox">
+               <h2>{this.state.currentRoom.name}</h2>
+                   {messageTags}
+                   <div><br></br> </div>
+                  <div className="addText">
+                   <MessageForm />
+                   </div>
+              </div>
+             </div>
+           </div>
       )
     }
 

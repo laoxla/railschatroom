@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'chats' => 'chats#index'
+    #  post "chats/:id/chats" => 'chats#create'
   end
 
 

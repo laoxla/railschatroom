@@ -7,11 +7,10 @@ json.msgs @chats_db do |chat|
   json.user_id(chat.user_id)
   json.posted_at(chat.posted_at)
   json.railschatroom_id(chat.railschatroom_id)
-end
-
-json.lusers @all_users do |u|
-  json.id(u.id)
-  json.first(u.first_name)
-  json.last(u.last_name)
-  json.handle(u.user_name)
+  json.user do
+    json.id(chat.user.id)
+    json.first(chat.user.first_name)
+    json.last(chat.user.last_name)
+    json.handle(chat.user.user_name)
+ end
 end

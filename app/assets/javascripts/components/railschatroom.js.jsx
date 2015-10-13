@@ -96,7 +96,7 @@ var Railschatroom = React.createClass({
                    {messageTags}
                    <div><br></br> </div>
                   <div className="addText">
-                   <MessageForm />
+                   <MessageForm room={this.state.room}></MessageForm>
                    </div>
               </div>
              </div>

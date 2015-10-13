@@ -10,10 +10,27 @@
 
   <div class="page-header">
    <h1>Railschatroom <small>Share you thought...</small></h1>
+
+   <% if user_signed_in? %>
+          <div class="signin"><%= link_to 'Sign Out', sign_out_path, method: :post %></div>
+          <% end %>
+
+
  </div>
+
+ <% if alert %>
+    <div class="alert alert-danger"><%= alert %></div>
+  <% end %>
+
+  <% if notice %>
+    <div class="alert alert-info"><%= notice %></div>
+  <% end %>
+
+
 
 
 <%= yield %>
+
 
 </body>
 </html>

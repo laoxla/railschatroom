@@ -8,12 +8,15 @@ var MessageForm = React.createClass({
      var theText = this.refs.text.getDOMNode().value;
 
      var messageJSON = {
-       message: {
+       chat: {
          text: theText
        }
      }
 
-     $.post("/api/chats/" + this.props.railsChatRoom.id + "/chats.json", messageJSON).then(function(json){
+
+     console.log(this.props)
+
+     $.post("/api/railschatrooms/" + 1 + "/chats.json", messageJSON).then(function(json){
        component.refs.text.getDOMNode().value = "";
 
 
@@ -23,7 +26,7 @@ var MessageForm = React.createClass({
 
    render: function() {
      return <div className="message_form">
-       <input type="text" ref="body"></input>
+       <input type="text" ref="text"></input>
        <button onClick={this.handleButtonClick}>Submit</button>
      </div>
    }

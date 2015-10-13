@@ -2,9 +2,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'chats' => 'chats#index'
-    #  post "chats/:id/chats" => 'chats#create'
+    post "railschatrooms/:room_id/chats" => 'railschatrooms#create'
   end
 
+  post "api/chats/:room_id/chats" => 'api/chats#create'
 
   root 'railschatrooms#index'
 
@@ -23,6 +24,8 @@ Rails.application.routes.draw do
   get "/users/new" => 'users#new', as: :sign_up
 
  post "/users" => 'users#create', as: :users
+
+
 
  # namespace :api do
  #    get "railschatrooms" => 'railschatrooms#index'

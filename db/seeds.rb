@@ -1,7 +1,7 @@
 
 10.times do |n|
 
- User.create! first_name: Faker::Name.first_name, user_name: Faker::Internet.user_name, last_name: Faker::Name.last_name, email: "example#{n}.com", password_digest: "12345678"
+ User.create! first_name: Faker::Name.first_name, user_name: Faker::Internet.user_name, last_name: Faker::Name.last_name, email: "example#{n}.com", password: "12345678"
 
 end
 

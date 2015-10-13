@@ -1,8 +1,10 @@
 class RailschatroomsController < ApplicationController
 
+  before_action :authenticate_user!
+
 
   def index
-    @users = User.all
+    @users = User.where("id != ?", @current_user.id)
     @railsrooms = Railschatroom.all
   end
 

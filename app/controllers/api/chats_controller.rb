@@ -12,17 +12,25 @@ class Api::ChatsController < ApplicationController
   end
 
   def create
-    @chats_db = Chat.new params.require(:chat).permit(:text)
+
+    # NOTE: moved to api/railschatroom_controller.rb
+
+    @newchat = Chat.new params.require(:chat).permit(:text)
     # set room
-    @chats_db.railsChatRoom = Railschatroom.find params[:id]
+    @newchat.railsChatRoom = Railschatroom.find params[:room_id]
     # set user
     # @message.user = User.all.sample
     # if we had auth working
-    @chats_db.user = @current_user
-    if @message.save
-      render status: 201, json: @chats_db
+    @newchat.user = @current_user
+
+    puts '*-*-*'*111
+    pp @newchat
+    pp @message
+
+    if @newchat.save
+      render status: 201, json: @newchat
     else
-      render status: 422, json: @chats_db.errors
+      render status: 422, json: @newchat.errors
     end
   end
 

@@ -8,7 +8,9 @@ var MessageForm = React.createClass({
      var theText = this.refs.text.getDOMNode().value;
 
      var messageJSON = {
+   //.require(...
        chat: {
+      //.permit(...
          text: theText
        }
      }
@@ -16,7 +18,7 @@ var MessageForm = React.createClass({
 
      console.log(this.props)
 
-     $.post("/api/railschatrooms/" + 1 + "/chats.json", messageJSON).then(function(json){
+     $.post("/api/chats/" + this.props.room.id + "/chats.json", messageJSON).then(function(json_msg){
        component.refs.text.getDOMNode().value = "";
 
 

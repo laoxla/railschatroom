@@ -8,20 +8,28 @@ class Api::ChatsController < ApplicationController
 
   def index
     @all_users = User.all
-    @chats_db = Chat.all.limit(100)
+    @chats_db = Chat.all.order("posted_at desc").limit(100)
   end
 
   def create
 
-    # NOTE: moved to api/railschatroom_controller.rb
+    puts '*-*-*'*111
+    puts params
 
     @newchat = Chat.new params.require(:chat).permit(:text)
     # set room
-    @newchat.railsChatRoom = Railschatroom.find params[:room_id]
+    @newchat.railschatroom_id = params[:room_id]
+    @newchat.user_id = @current_user.id
+    @newchat.posted_at = Time.now
+
+   #  @theroom = Railschatroom.find_by(params[:id])
+
+   #  @theroom.chats << @newchat
+
     # set user
     # @message.user = User.all.sample
     # if we had auth working
-    @newchat.user = @current_user
+   #  @chats_db.user << @current_user
 
     puts '*-*-*'*111
     pp @newchat
@@ -33,5 +41,4 @@ class Api::ChatsController < ApplicationController
       render status: 422, json: @newchat.errors
     end
   end
-
 end

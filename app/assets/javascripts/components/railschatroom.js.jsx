@@ -46,6 +46,27 @@ var Railschatroom = React.createClass({
     })
   },
 
+  _createRoom(){
+     var theName = this.refs.newRoomName.getDOMNode().value
+    var postParams = {
+  //.require(...
+      railschatroom: {
+    //.permit(...
+        name: theName
+      }
+    }
+       var component = this
+    $.post("/api/railschatrooms", postParams).done(function(new_room_obj){
+        var existingRooms = component.state.railsChatRooms.map(function(room_obj){
+          return room_obj
+        })
+        existingRooms.push(new_room_obj)
+        component.setState({
+          railsChatRooms: existingRooms
+        })
+    })
+  },
+
   render() {
     var component = this
 
@@ -55,12 +76,9 @@ var Railschatroom = React.createClass({
     //### Handle Click - Changing Rooms ### //
     var chatroom_buttons = this.state.railsChatRooms.map(function(railsChatRoom){
       return(
-        <div>
-        <br></br>
         <div className="rooms">
-      <li onClick={component._changeRoom} data-room={railsChatRoom.id}>{railsChatRoom.name}</li>
-      </div>
-      </div>
+          <button className ="rooms" onClick={component._changeRoom} data-room={railsChatRoom.id}>{railsChatRoom.name}</button>
+        </div>
     )
     })
 
@@ -89,14 +107,18 @@ var Railschatroom = React.createClass({
           <div className="container">
             <div className="channel">
               <h2>Channels</h2>
-                 <strong>{chatroom_buttons}</strong>
+                 {chatroom_buttons}
+                 <hr/>
+                 <input type="text" ref="newRoomName"></input>
+                 <button onClick={this._createRoom}>+ New Room</button>
+
             </div>
               <div className="chatbox">
                <h2>{this.state.currentRoom.name}</h2>
                    {messageTags}
                    <div><br></br> </div>
                   <div className="addText">
-                   <MessageForm room={this.state.room}></MessageForm>
+                   <MessageForm room={this.state.currentRoom}></MessageForm>
                    </div>
               </div>
              </div>

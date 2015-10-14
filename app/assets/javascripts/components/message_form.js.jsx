@@ -21,8 +21,6 @@ var MessageForm = React.createClass({
      $.post("/api/chats/" + this.props.room.id + "/chats.json", messageJSON).then(function(json_msg){
        component.refs.text.getDOMNode().value = "";
 
-
-       window.location = window.location;
      });
    },
 

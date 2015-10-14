@@ -25,18 +25,33 @@
 .container{
   background-color: white;
   display: flex;
+  height: 650px;
   padding: 0;
-
+  position: relative;
 }
 .channel{
   background-color: #2980b9;
+  color: white;
   width: 30%;
   text-align: center;
   list-style: none;
+
+  input {
+    padding: 3px;
+    border: 2px solid #fff;
+  }
+
+  button {
+  background: #16a085;
+  border: 3px solid #16a085;
+  }
 }
 .chatbox{
   width: 70%;
   padding-left: 10px;
+  height: 80%;
+  margin-bottom: 150px;
+  overflow: scroll;
 }
 .chats{
  font-size: 16px;
@@ -45,12 +60,16 @@
   margin: 0;
 }
 .message_form{
+  width: 73%;
   background: #2980b9;
   padding: 3rem;
+  position: absolute; bottom: 0; right: 0;
+
   input[type='text'] {
     padding: 2rem;
     font-size: 2rem;
-    width: 85%;
+
+
   }
   button {
     padding: 2rem;
@@ -63,8 +82,19 @@
 
 .addText{
   margin-left: -45px;
-
 }
+
+.cbutton button{
+  width:100%;
+  padding: 2rem;
+  font-size: 2rem;
+  background: #16a085;
+  color: white;
+  border: 2px solid #16a085;
+  border-bottom: 1px solid #fff;
+  border-top: 1px solid #fff;
+}
+
 
 body{
 background-color: #34495e;

@@ -13,8 +13,8 @@ class Api::ChatsController < ApplicationController
 
   def create
 
-    puts '*-*-*'*111
-    puts params
+    # puts '*-*-*'*111
+    # puts params
 
     @newchat = Chat.new params.require(:chat).permit(:text)
     # set room
@@ -31,9 +31,9 @@ class Api::ChatsController < ApplicationController
     # if we had auth working
    #  @chats_db.user << @current_user
 
-    puts '*-*-*'*111
-    pp @newchat
-    pp @message
+    # puts '*-*-*'*111
+    # pp @newchat
+    # pp @message
 
     if @newchat.save
       render status: 201, json: @newchat

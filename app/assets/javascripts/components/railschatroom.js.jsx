@@ -13,23 +13,31 @@ var Railschatroom = React.createClass({
 
   componentDidMount(){
       var component = this;
-      fetch("/api/chats", {credentials: 'include'}).then(function(response){
-        response.json().then(function(json_data){
-          // console.log(json_data)
+      this.messageInterval = setInterval(function(){
+          console.log('...pinging server for new messsages....')
+          fetch("/api/chats", {credentials: 'include'}).then(function(response){
+            response.json().then(function(json_data){
+              // console.log(json_data)
 
-          component.props.chat_data = json_data
-          //1) map new array of messages  from json_data-array
-          var messageList = json_data.msgs.map(function(msgObject){
-            return msgObject
-          })
+              component.props.chat_data = json_data
+              //1) map new array of messages  from json_data-array
+              var messageList = json_data.msgs.map(function(msgObject){
+                return msgObject
+              })
 
 
-          //2) setState with array of messages
-          component.setState({
-            currentMessages:  messageList//<--an array of messages
-          })
-        });
-      });
+              //2) setState with array of messages
+              component.setState({
+                currentMessages:  messageList//<--an array of messages
+              })
+            });
+          });
+
+        },2000);
+    },
+
+    componentWillUnmount(){
+      clearInterval(this.messageInterval)
     },
 
   _changeRoom(evt){
@@ -47,7 +55,7 @@ var Railschatroom = React.createClass({
   },
 
   _createRoom(){
-     var theName = this.refs.newRoomName.getDOMNode().value
+    var theName = this.refs.newRoomName.getDOMNode().value
     var postParams = {
   //.require(...
       railschatroom: {
@@ -67,11 +75,38 @@ var Railschatroom = React.createClass({
     })
   },
 
+  _messagesToJSX(currentMsgs){
+        var component = this
+
+        var filteredMessagesByRoom = currentMsgs.filter(function(message){
+           return message.railschatroom_id === component.state.currentRoom.id
+        })
+
+         console.log("How many messages are in this room???")
+         console.log(filteredMessagesByRoom.length)
+
+         if(filteredMessagesByRoom.length > 0){
+            var jsxElementsForChats = filteredMessagesByRoom.map(function(message){
+               return(
+                 <div>
+                   <hr></hr>
+
+                    <div className="chats">
+                    <h4>{message.text}</h4>
+                    <cite>{message.user.handle} - {message.posted_at}</cite>
+                    </div>
+                </div>
+               )
+             })
+         } else {
+            var jsxElementsForChats = (<div>Sorry no message in this room, you can start a conversation!</div>)
+         }
+
+         return jsxElementsForChats
+  },
+
   render() {
     var component = this
-
-    // console.log(this.props.users)
-    // console.log(this.props.rooms)
 
     //### Handle Click - Changing Rooms ### //
     var chatroom_buttons = this.state.railsChatRooms.map(function(railsChatRoom){
@@ -79,43 +114,25 @@ var Railschatroom = React.createClass({
         <div className="rooms">
           <button className ="rooms" onClick={component._changeRoom} data-room={railsChatRoom.id}>{railsChatRoom.name}</button>
         </div>
-    )
+      )
     })
 
-    var filteredMessagesByRoom = this.state.currentMessages.filter(function(message){
+    var jsxChats = this._messagesToJSX(this.state.currentMessages)
 
-       return message.railschatroom_id === component.state.currentRoom.id
-    })
-
-     var messageTags = filteredMessagesByRoom.map(function(message){
-       return(
-         <div>
-         <hr></hr>
-
-         <div className="chats">
-         <h4>{message.text}</h4>
-         <cite>{message.user.handle} - {message.posted_at}</cite>
-        </div>
-        </div>
-       )
-
-     })
-
-      return (
+    return (
 
         <div>
           <div className="container">
             <div className="channel">
               <h2>Channels</h2>
-                 {chatroom_buttons}
+                 <div className="cbutton">{chatroom_buttons}</div>
                  <hr/>
                  <input type="text" ref="newRoomName"></input>
-                 <button onClick={this._createRoom}>+ New Room</button>
-
+                    <button onClick={this._createRoom}> New Room</button>
             </div>
               <div className="chatbox">
                <h2>{this.state.currentRoom.name}</h2>
-                   {messageTags}
+                   {jsxChats}
                    <div><br></br> </div>
                   <div className="addText">
                    <MessageForm room={this.state.currentRoom}></MessageForm>

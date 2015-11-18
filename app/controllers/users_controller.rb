@@ -5,7 +5,7 @@ class UsersController < ApplicationController
      end
 
      def create
-       @user = User.new params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+       @user = User.new params.require(:user).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation)
        if @user.save
          sign_in @user
          redirect_to root_path, notice: "Welcome to Railschatroom, #{@user.user_name}"
